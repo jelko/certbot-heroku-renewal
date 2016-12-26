@@ -19,9 +19,9 @@ fi
 # The below, commented demonstrates how a Heroku env variable
 # could be used to enable the /.well-known/acme-challenge
 # endpoint only when renewal occurs.
-# heroku config:set IS_ACME_ENABLED=true -a $heroku_app
+heroku config:set ACME_ENABLED=1 -a $heroku_app
 
-sudo certbot-auto renew --quiet --no-self-upgrade
+sudo certbot renew --quiet --no-self-upgrade
 
 heroku certs:update $letsencrypt_live_dir/$domain/cert.pem \
     $letsencrypt_live_dir/$domain/privkey.pem \
@@ -29,4 +29,4 @@ heroku certs:update $letsencrypt_live_dir/$domain/cert.pem \
     --confirm $heroku_app
 
 # Disables the ACME endpoint; see above.
-# heroku config:unset IS_ACME_ENABLED -a $heroku_app
+heroku config:set ACME_ENABLED=0 -a $heroku_app
